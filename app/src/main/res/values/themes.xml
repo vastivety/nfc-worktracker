@@ -1,0 +1,4 @@
+<resources>
+    <style name="Theme.NFCWorkTracker" parent="Theme.Material3.DayNight">
+    </style>
+</resources>

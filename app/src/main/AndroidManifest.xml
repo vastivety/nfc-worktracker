@@ -25,7 +25,6 @@
                     android:host="@string/app_website_url"
                     android:pathPrefix="/tag_discovered" />
             </intent-filter>
-
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">NFC WorkTracker</string>
-    <string name="app_website_url">nfc-worktracker.github.io</string>
+    <string name="tag_mime">application/ca.mcgill.nfcworktracker.tag</string>
 </resources>

@@ -31,7 +31,6 @@ class NfcService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG, Tag::class.java)
             messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES, NdefMessage::class.java)
-
         } else {
             @Suppress("DEPRECATION")
             tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
@@ -67,7 +66,7 @@ class NfcService : Service() {
             return null
         }
         if (relevantRecords.size != 1) {
-            Log.e("nfc", "More than one relevant NdefRecord is present, choosing first.")
+            Log.w("nfc", "More than one relevant NdefRecord is present, choosing first.")
         }
         return relevantRecords[0]
     }

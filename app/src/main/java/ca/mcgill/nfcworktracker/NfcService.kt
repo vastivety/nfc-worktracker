@@ -57,13 +57,13 @@ class NfcService : Service() {
         val stopIntent = Intent(ACTION_STOP_SELF)
         val stopAction = Notification.Action.Builder(
             Icon.createWithResource(this, R.drawable.ic_stop_circle),
-            "CANCEL",
+            "Stop Tracker",
             PendingIntent.getBroadcast(this, 0, stopIntent, PendingIntent.FLAG_IMMUTABLE)
         ).build()
         val nf: Notification = Notification.Builder(this, SERVICE_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_nfc)
-            .setContentTitle("test")
-            .setContentText("testtttttttext")
+            .setContentTitle("Tracking active")
+            .setContentText("Your session is being recorded.")
             .addAction(stopAction)
             .build()
         startForeground(1, nf)

@@ -10,19 +10,37 @@ import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
+import android.nfc.tech.Ndef
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import java.io.IOException
 import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 class NfcService : Service() {
 
     private val selfStopReceiver = NotificationActionBroadcastReceiver()
+    private val tagPresenceCheckScheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
+    private var tag: Tag? = null
+
+    private val checkTagStillPresent = Runnable {
+        assert(tag != null)
+        if (isTagStillPresent()) {
+            Log.d("nfc", "tag still there: $tag")
+        } else {
+            PendingIntent.getBroadcast(this, 0, Intent(ACTION_STOP_SELF), PendingIntent.FLAG_IMMUTABLE).send()
+        }
+    }
 
     companion object {
         const val SERVICE_NOTIFICATION_CHANNEL_ID = "service-notification-channel"
         const val SERVICE_NOTIFICATION_CHANNEL_NAME = "Tracking Active"
         const val ACTION_STOP_SELF = "ca.mcgill.nfcworktracker.action_stop_self"
+
+        var hasInstanceRunning = false
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -30,7 +48,11 @@ class NfcService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val tag: Tag?
+        if (hasInstanceRunning) {
+            Log.w("nfc", "duplicate start of service was stopped")
+            return START_NOT_STICKY
+        }
+
         val messages: Array<NdefMessage>?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG, Tag::class.java)
@@ -48,7 +70,7 @@ class NfcService : Service() {
         }
 
         //print content of payload in record with relevant mime type
-        Log.d("nfc", "started service with tag \"${String(relevantRecord.payload)}\"")
+        Log.i("nfc", "started service with tag \"${String(relevantRecord.payload)}\"")
 
         //start service
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(NotificationChannel(
@@ -68,16 +90,34 @@ class NfcService : Service() {
             .build()
         startForeground(1, nf)
 
+        tagPresenceCheckScheduler.scheduleAtFixedRate(checkTagStillPresent, 0, 1, TimeUnit.SECONDS)
+
+        hasInstanceRunning = true
         return START_NOT_STICKY
     }
 
     private inner class NotificationActionBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action.equals(ACTION_STOP_SELF)) {
+                tagPresenceCheckScheduler.shutdownNow()
                 this@NfcService.stopSelf()
+                hasInstanceRunning = false
+                Log.i("nfc", "service stopped")
             }
         }
+    }
 
+    private fun isTagStillPresent(): Boolean {
+        return try {
+            val ndefTag = Ndef.get(tag)
+            ndefTag.connect()
+            val connected = ndefTag.isConnected
+            ndefTag.close()
+            connected
+        } catch (ex: IOException) {
+            Log.d("nfc", "nfc check failed")
+            false
+        }
     }
 
     override fun onCreate() {

@@ -1,13 +1,10 @@
 package ca.mcgill.nfcworktracker
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.drawable.Icon
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
@@ -16,15 +13,16 @@ import android.nfc.Tag
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import androidx.core.content.res.ResourcesCompat
 import java.util.*
 
 class NfcService : Service() {
 
+    private val selfStopReceiver = NotificationActionBroadcastReceiver()
+
     companion object {
         const val SERVICE_NOTIFICATION_CHANNEL_ID = "service-notification-channel"
         const val SERVICE_NOTIFICATION_CHANNEL_NAME = "Tracking Active"
-        const val ACTION_STOP_SELF = "broadcast intent to stop self"
+        const val ACTION_STOP_SELF = "ca.mcgill.nfcworktracker.action_stop_self"
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -38,9 +36,10 @@ class NfcService : Service() {
             tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG, Tag::class.java)
             messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES, NdefMessage::class.java)
         } else {
-            @Suppress("DEPRECATION")
+            @Suppress("DEPRECATION") //checked SDK_INT above
             tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-            @Suppress("DEPRECATION")
+            @Suppress("DEPRECATION") //checked SDK_INT above
+            @Suppress("UNCHECKED_CAST") //extra should only contain ndef messages
             messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<NdefMessage>?
         }
         val relevantRecord = if (messages == null) null else getRelevantRecord(messages)
@@ -55,9 +54,7 @@ class NfcService : Service() {
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(NotificationChannel(
             SERVICE_NOTIFICATION_CHANNEL_ID, SERVICE_NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT))
 
-        val stopIntent = Intent(this, NotificationActionBroadcastReceiver::class.java).apply {
-            action = ACTION_STOP_SELF
-        }
+        val stopIntent = Intent(ACTION_STOP_SELF)
         val stopAction = Notification.Action.Builder(
             Icon.createWithResource(this, R.drawable.ic_stop_circle),
             "CANCEL",
@@ -75,13 +72,22 @@ class NfcService : Service() {
     }
 
     private inner class NotificationActionBroadcastReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            Log.d("nfc", "received with ${intent?.action}")
-            if (intent?.action.equals(ACTION_STOP_SELF)) {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action.equals(ACTION_STOP_SELF)) {
                 this@NfcService.stopSelf()
             }
         }
 
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        registerReceiver(selfStopReceiver, IntentFilter(ACTION_STOP_SELF))
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(selfStopReceiver)
+        super.onDestroy()
     }
 
     private fun getRelevantRecord(messages: Array<NdefMessage>): NdefRecord? {

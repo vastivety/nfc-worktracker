@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NFC WorkTracker</string>
     <string name="tag_mime">application/ca.mcgill.nfcworktracker.tag</string>
+    <string name="show_previous_sessions">Show previous Sessions</string>
 </resources>

@@ -11,15 +11,15 @@ import ca.mcgill.nfcworktracker.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1234)
+                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 0)
             }
         }
 

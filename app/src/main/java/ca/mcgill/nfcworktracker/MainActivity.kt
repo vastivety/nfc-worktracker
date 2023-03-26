@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import android.Manifest
-import android.widget.Toast
+import android.content.Intent
 import ca.mcgill.nfcworktracker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -24,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.showPrevious.setOnClickListener {
-            Toast.makeText(this, "moin", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
         }
     }
 }

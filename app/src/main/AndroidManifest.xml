@@ -16,6 +16,9 @@
         android:theme="@style/Theme.NFCWorkTracker"
         tools:targetApi="33">
         <activity
+            android:name=".HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".TagDiscoveredActivity"
             android:exported="true">
             <intent-filter>

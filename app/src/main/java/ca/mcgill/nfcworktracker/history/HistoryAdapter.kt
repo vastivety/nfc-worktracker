@@ -1,15 +1,22 @@
 package ca.mcgill.nfcworktracker.history
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.mcgill.nfcworktracker.R
-import ca.mcgill.nfcworktracker.database.HistoryEntry
+import java.time.Instant
 
-class HistoryAdapter(private val dataset: Array<HistoryDataPoint>) :
+class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+
+    val dataset = ArrayList<HistoryDataPoint>()
+
+    init {
+        reloadFromDatabase()
+    }
 
     /**
      * view holder for a single history entry.
@@ -20,6 +27,28 @@ class HistoryAdapter(private val dataset: Array<HistoryDataPoint>) :
         init {
             textView = view.findViewById(R.id.test_text)
         }
+    }
+
+    /**
+     * repopulates dataset member variable with the current database entries.
+     */
+    private fun reloadFromDatabase() {
+        dataset.clear()
+        dataset.addAll(databaseHelper.getAll())
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearHistory() {
+        databaseHelper.deleteAll()
+        dataset.clear()
+        //notifyItemRangeRemoved(0, itemCount) //does not work
+        notifyDataSetChanged()
+    }
+
+    fun addPoint(point: HistoryDataPoint) {
+        databaseHelper.add(point)
+        reloadFromDatabase()
+        notifyItemInserted(itemCount)
     }
 
     /**

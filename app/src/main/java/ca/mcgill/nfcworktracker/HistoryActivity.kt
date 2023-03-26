@@ -14,13 +14,13 @@ class HistoryActivity : AppCompatActivity() {
         val binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dbHelper = HistoryDatabaseHelper(application as MyApplication)
+        val adapter = HistoryAdapter(HistoryDatabaseHelper(application as MyApplication))
+        binding.recyclerView.adapter = adapter
 
-        //populate with some example values
-        //TODO remove
-        dbHelper.deleteAll()
-        dbHelper.add(HistoryDataPoint(Instant.now().minusSeconds(400), Instant.now()))
+        binding.clearTestButton.setOnClickListener { adapter.clearHistory() }
+        binding.addTestButton.setOnClickListener { adapter.addPoint(
+            HistoryDataPoint(Instant.now().minusSeconds(400), Instant.now())
+        ) }
 
-        binding.recyclerView.adapter = HistoryAdapter(dbHelper.getAll())
     }
 }

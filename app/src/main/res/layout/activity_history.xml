@@ -14,4 +14,19 @@
         tools:itemCount="16"
         tools:listitem="@layout/history_entry" />
 
+    <Button
+        android:id="@+id/clear_test_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/add_test_button"
+        android:text="CLEAR" />
+    <Button
+        android:id="@+id/add_test_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="ADD ONE" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

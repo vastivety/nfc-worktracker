@@ -14,7 +14,10 @@ import android.nfc.tech.Ndef
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import ca.mcgill.nfcworktracker.history.HistoryDataPoint
+import ca.mcgill.nfcworktracker.history.HistoryDatabaseHelper
 import java.io.IOException
+import java.time.Instant
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -34,6 +37,8 @@ class NfcService : Service() {
             PendingIntent.getBroadcast(this, 0, Intent(ACTION_STOP_SELF), PendingIntent.FLAG_IMMUTABLE).send()
         }
     }
+
+    private lateinit var startTime: Instant
 
     companion object {
         const val SERVICE_NOTIFICATION_CHANNEL_ID = "service-notification-channel"
@@ -90,16 +95,30 @@ class NfcService : Service() {
             .build()
         startForeground(1, nf)
 
-        tagPresenceCheckScheduler.scheduleAtFixedRate(checkTagStillPresent, 0, 1, TimeUnit.SECONDS)
+        startTracking()
 
         hasInstanceRunning = true
         return START_NOT_STICKY
+    }
+
+    private fun startTracking() {
+        startTime = Instant.now()
+        tagPresenceCheckScheduler.scheduleAtFixedRate(checkTagStillPresent, 0, 1, TimeUnit.SECONDS)
+    }
+
+    private fun stopTracking() {
+        val databaseHelper = HistoryDatabaseHelper(application as MyApplication)
+        databaseHelper.add(HistoryDataPoint(
+            startTime,
+            Instant.now()
+        ))
     }
 
     private inner class NotificationActionBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action.equals(ACTION_STOP_SELF)) {
                 tagPresenceCheckScheduler.shutdownNow()
+                stopTracking()
                 this@NfcService.stopSelf()
                 hasInstanceRunning = false
                 Log.i("nfc", "service stopped")

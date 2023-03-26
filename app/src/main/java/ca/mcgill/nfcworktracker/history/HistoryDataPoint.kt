@@ -1,4 +1,4 @@
-package ca.mcgill.nfcworktracker.historydata
+package ca.mcgill.nfcworktracker.history
 
 import java.time.Instant
 

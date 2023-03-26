@@ -5,6 +5,7 @@ import android.os.Bundle
 import ca.mcgill.nfcworktracker.databinding.ActivityHistoryBinding
 import ca.mcgill.nfcworktracker.historydata.HistoryAdapter
 import ca.mcgill.nfcworktracker.historydata.HistoryDataPoint
+import java.time.Instant
 
 class HistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,6 +13,6 @@ class HistoryActivity : AppCompatActivity() {
         val binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.recyclerView.adapter = HistoryAdapter(arrayOf(HistoryDataPoint(), HistoryDataPoint(), HistoryDataPoint()))
+        binding.recyclerView.adapter = HistoryAdapter(arrayOf(HistoryDataPoint(Instant.now().minusSeconds(400), Instant.now())))
     }
 }

@@ -10,6 +10,9 @@ import ca.mcgill.nfcworktracker.R
 class HistoryAdapter(private val dataset: Array<HistoryDataPoint>) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
+    /**
+     * view holder for a single history entry.
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
 
@@ -18,17 +21,25 @@ class HistoryAdapter(private val dataset: Array<HistoryDataPoint>) :
         }
     }
 
+    /**
+     * creates the view holders.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.history_entry, parent, false)
 
         return ViewHolder(view)
-
     }
 
+    /**
+     * updates the view holders, based on current dataset contents.
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = "HELLO I AM AT POSITION $position."
+        holder.textView.text = "HELLO I AM AT POSITION $position. My record says:\n${dataset[position]}"
     }
 
+    /**
+     * returns dataset size.
+     */
     override fun getItemCount(): Int = dataset.size
 }

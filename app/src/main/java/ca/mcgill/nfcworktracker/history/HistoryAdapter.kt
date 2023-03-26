@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.mcgill.nfcworktracker.R
-import java.time.Instant
 
 class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
@@ -23,8 +22,12 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
+        val startTime: TextView
+        val endTime: TextView
 
         init {
+            startTime = view.findViewById(R.id.start_time)
+            endTime = view.findViewById(R.id.end_time)
             textView = view.findViewById(R.id.test_text)
         }
     }
@@ -65,6 +68,8 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
      * updates the view holders, based on current dataset contents.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.startTime.text = dataset[position].startTime.toString()
+        holder.endTime.text = dataset[position].endTime.toString()
         holder.textView.text = "HELLO I AM AT POSITION $position. My record says:\n${dataset[position]}"
     }
 

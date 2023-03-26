@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply plugin: 'kotlin-kapt'
+
 android {
     namespace 'ca.mcgill.nfcworktracker'
     compileSdk 33
@@ -13,6 +15,12 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -42,6 +50,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     def room_version = "2.5.1"
+    implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 }

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.mcgill.nfcworktracker.R
+import ca.mcgill.nfcworktracker.database.HistoryEntry
 
 class HistoryAdapter(private val dataset: Array<HistoryDataPoint>) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {

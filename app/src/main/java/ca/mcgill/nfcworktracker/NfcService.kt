@@ -79,7 +79,7 @@ class NfcService : Service() {
 
         //start service
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(NotificationChannel(
-            SERVICE_NOTIFICATION_CHANNEL_ID, SERVICE_NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT))
+            SERVICE_NOTIFICATION_CHANNEL_ID, SERVICE_NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW))
 
         val stopIntent = Intent(ACTION_STOP_SELF)
         val stopAction = Notification.Action.Builder(

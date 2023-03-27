@@ -21,7 +21,8 @@
             android:exported="false" />
         <activity
             android:name=".TagDiscoveredActivity"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 

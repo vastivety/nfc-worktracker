@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.mcgill.nfcworktracker.R
@@ -24,11 +25,13 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
         val textView: TextView
         val startTime: TextView
         val endTime: TextView
+        val timeConnector: ImageView
 
         init {
             startTime = view.findViewById(R.id.start_time)
             endTime = view.findViewById(R.id.end_time)
             textView = view.findViewById(R.id.test_text)
+            timeConnector = view.findViewById(R.id.time_connector)
         }
     }
 
@@ -70,6 +73,7 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.startTime.text = dataset[position].startTime.toString()
         holder.endTime.text = dataset[position].endTime.toString()
+        holder.timeConnector.imageTintList = holder.startTime.textColors
         holder.textView.text = "HELLO I AM AT POSITION $position. My record says:\n${dataset[position]}"
     }
 

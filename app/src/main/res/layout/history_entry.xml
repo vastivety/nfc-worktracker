@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/start_time"
             app:layout_constraintEnd_toStartOf="@id/end_time"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/start_time"
             android:src="@drawable/ic_arrow_time_to_time"
-            app:tint="@android:color/primary_text_dark"
+            tools:tint="@color/test"
             android:contentDescription="@string/descr_arrow_time_to_time" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -49,7 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="48dp"
-            android:background="#FF5722"/>
+            android:background="@color/test"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

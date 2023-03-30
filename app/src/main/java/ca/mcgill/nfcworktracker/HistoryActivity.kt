@@ -26,6 +26,7 @@ class HistoryActivity : AppCompatActivity() {
             HistoryDataPoint(Instant.now().minusSeconds(400), Instant.now())
         ) }
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -38,6 +39,10 @@ class HistoryActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.clear_history -> {
                 adapter.clearHistory()
+                true
+            }
+            android.R.id.home -> {
+                this.finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)

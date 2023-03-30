@@ -22,9 +22,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.createNew.setOnClickListener {
+            startActivity(Intent(this, CreateTagActivity::class.java))
+        }
+
         binding.showPrevious.setOnClickListener {
-            val intent = Intent(this, HistoryActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, HistoryActivity::class.java))
         }
     }
 }

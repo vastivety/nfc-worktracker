@@ -6,4 +6,5 @@
     <string name="clear_history">Clear history</string>
     <string name="history_title">Session History</string>
     <string name="create_new_tag">Create new Tag</string>
+    <string name="create_tag">Create a Tag</string>
 </resources>

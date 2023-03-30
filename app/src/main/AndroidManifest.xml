@@ -17,9 +17,13 @@
         android:theme="@style/Theme.NFCWorkTracker"
         tools:targetApi="33">
         <activity
+            android:name=".CreateTagActivity"
+            android:exported="true"
+            android:label="@string/create_tag" />
+        <activity
             android:name=".HistoryActivity"
-            android:label="@string/history_title"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/history_title" />
         <activity
             android:name=".TagDiscoveredActivity"
             android:exported="true"

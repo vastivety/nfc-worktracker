@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_create_tag.xml"
+    app:startDestination="@id/introFragment">
+
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="ca.mcgill.nfcworktracker.create.IntroFragment"
+        android:label="fragment_create_intro"
+        tools:layout="@layout/fragment_create_intro" >
+        <action
+            android:id="@+id/action_introFragment_to_setupFragment"
+            app:destination="@id/setupFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="ca.mcgill.nfcworktracker.create.SetupFragment"
+        android:label="fragment_create_setup"
+        tools:layout="@layout/fragment_create_setup" />
+</navigation>

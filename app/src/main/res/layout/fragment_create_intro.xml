@@ -3,10 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".create.IntroFragment">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="INTRO FRAGMENT" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/next"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:paddingHorizontal="32dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

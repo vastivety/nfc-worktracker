@@ -1,4 +1,10 @@
 <resources>
     <style name="Theme.NFCWorkTracker" parent="Theme.Material3.DayNight">
     </style>
+
+    <style name="Widget.NFCWorkTracker.NextButton" parent="@style/Widget.Material3.Button">
+        <item name="android:text">@string/next</item>
+        <item name="android:layout_marginBottom">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+    </style>
 </resources>

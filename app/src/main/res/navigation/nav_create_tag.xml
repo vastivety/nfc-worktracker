@@ -32,7 +32,11 @@
         android:id="@+id/failureFragment"
         android:name="ca.mcgill.nfcworktracker.create.FailureFragment"
         android:label="fragment_create_failure"
-        tools:layout="@layout/fragment_create_failure" />
+        tools:layout="@layout/fragment_create_failure" >
+        <action
+            android:id="@+id/action_failureFragment_retry"
+            app:popUpTo="@id/introFragment" />
+    </fragment>
     <fragment
         android:id="@+id/writeFragment"
         android:name="ca.mcgill.nfcworktracker.create.WriteFragment"

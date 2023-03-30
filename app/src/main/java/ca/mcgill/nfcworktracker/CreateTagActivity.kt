@@ -18,6 +18,7 @@ class CreateTagActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             android.R.id.home -> {
+                @Suppress("DEPRECATION")
                 onBackPressed()
                 true
             }
@@ -25,6 +26,7 @@ class CreateTagActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("OVERRIDE_DEPRECATION")
     override fun onBackPressed() {
         val navController = findNavController(R.id.create_tag_fragment_container)
         when (navController.currentDestination?.id) {

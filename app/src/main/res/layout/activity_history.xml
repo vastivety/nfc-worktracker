@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/test"
         android:text="ADD ONE" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

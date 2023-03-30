@@ -4,20 +4,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".create.SetupFragment">
+    tools:context=".create.WriteFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="SETUP FRAGMENT" />
+        android:text="WRITE FRAGMENT" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pretend_discovered"
+        android:id="@+id/pretend_write_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/pretend_write_fail"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="pretend tag written (success)"
+        android:backgroundTint="@color/test"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pretend_write_fail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="pretend tag discovered"
+        android:text="pretend tag write FAILED"
         android:backgroundTint="@color/test"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

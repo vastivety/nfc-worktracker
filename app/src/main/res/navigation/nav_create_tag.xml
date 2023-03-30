@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_create_tag.xml"
     app:startDestination="@id/introFragment">
-
     <fragment
         android:id="@+id/introFragment"
         android:name="ca.mcgill.nfcworktracker.create.IntroFragment"
@@ -14,10 +13,36 @@
             android:id="@+id/action_introFragment_to_setupFragment"
             app:destination="@id/setupFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/setupFragment"
         android:name="ca.mcgill.nfcworktracker.create.SetupFragment"
         android:label="fragment_create_setup"
-        tools:layout="@layout/fragment_create_setup" />
+        tools:layout="@layout/fragment_create_setup" >
+        <action
+            android:id="@+id/action_setupFragment_to_writeFragment"
+            app:destination="@id/writeFragment"
+            app:launchSingleTop="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmationFragment"
+        android:name="ca.mcgill.nfcworktracker.create.ConfirmationFragment"
+        android:label="fragment_create_confirmation"
+        tools:layout="@layout/fragment_create_confirmation" />
+    <fragment
+        android:id="@+id/failureFragment"
+        android:name="ca.mcgill.nfcworktracker.create.FailureFragment"
+        android:label="fragment_create_failure"
+        tools:layout="@layout/fragment_create_failure" />
+    <fragment
+        android:id="@+id/writeFragment"
+        android:name="ca.mcgill.nfcworktracker.create.WriteFragment"
+        android:label="fragment_create_write"
+        tools:layout="@layout/fragment_create_write" >
+        <action
+            android:id="@+id/action_writeFragment_to_confirmationFragment"
+            app:destination="@id/confirmationFragment" />
+        <action
+            android:id="@+id/action_writeFragment_to_failureFragment"
+            app:destination="@id/failureFragment" />
+    </fragment>
 </navigation>

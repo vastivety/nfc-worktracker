@@ -2,6 +2,7 @@ package ca.mcgill.nfcworktracker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.navigation.findNavController
 import ca.mcgill.nfcworktracker.databinding.ActivityCreateTagBinding

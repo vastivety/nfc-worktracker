@@ -7,6 +7,18 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/create_new_tag"
+        android:drawableTop="@drawable/ic_nfc_large"
+        style="@style/Widget.Material3.Button.IconButton"
+        app:cornerRadius="16dp"/>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/show_previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

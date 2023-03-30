@@ -5,4 +5,5 @@
     <string name="descr_arrow_time_to_time">arrow connecting start time to end time</string>
     <string name="clear_history">Clear history</string>
     <string name="history_title">Session History</string>
+    <string name="create_new_tag">Create new Tag</string>
 </resources>

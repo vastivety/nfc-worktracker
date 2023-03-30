@@ -3,4 +3,5 @@
     <string name="tag_mime">application/ca.mcgill.nfcworktracker.tag</string>
     <string name="show_previous_sessions">Show previous Sessions</string>
     <string name="descr_arrow_time_to_time">arrow connecting start time to end time</string>
+    <string name="clear_history">Clear history</string>
 </resources>

@@ -18,10 +18,10 @@ class WriteFragment : Fragment() {
         val binding = FragmentCreateWriteBinding.inflate(layoutInflater)
 
         binding.pretendWriteSuccess.setOnClickListener {
-            findNavController().navigate(R.id.action_writeFragment_to_confirmationFragment)
+            findNavController().navigate(R.id.action_writeFragment_success)
         }
         binding.pretendWriteFail.setOnClickListener {
-            findNavController().navigate(R.id.action_writeFragment_to_failureFragment)
+            findNavController().navigate(R.id.action_writeFragment_failure)
         }
 
         return binding.root

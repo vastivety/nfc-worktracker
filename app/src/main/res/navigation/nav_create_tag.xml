@@ -10,7 +10,7 @@
         android:label="fragment_create_intro"
         tools:layout="@layout/fragment_create_intro" >
         <action
-            android:id="@+id/action_introFragment_to_setupFragment"
+            android:id="@+id/action_introFragment_next"
             app:destination="@id/setupFragment" />
     </fragment>
     <fragment
@@ -19,9 +19,8 @@
         android:label="fragment_create_setup"
         tools:layout="@layout/fragment_create_setup" >
         <action
-            android:id="@+id/action_setupFragment_to_writeFragment"
-            app:destination="@id/writeFragment"
-            app:launchSingleTop="false" />
+            android:id="@+id/action_setupFragment_next"
+            app:destination="@id/writeFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"
@@ -43,10 +42,10 @@
         android:label="fragment_create_write"
         tools:layout="@layout/fragment_create_write" >
         <action
-            android:id="@+id/action_writeFragment_to_confirmationFragment"
+            android:id="@+id/action_writeFragment_success"
             app:destination="@id/confirmationFragment" />
         <action
-            android:id="@+id/action_writeFragment_to_failureFragment"
+            android:id="@+id/action_writeFragment_failure"
             app:destination="@id/failureFragment" />
     </fragment>
 </navigation>

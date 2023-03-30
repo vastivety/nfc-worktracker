@@ -18,7 +18,7 @@ class SetupFragment : Fragment() {
         val binding = FragmentCreateSetupBinding.inflate(layoutInflater)
 
         binding.pretendDiscovered.setOnClickListener {
-            findNavController().navigate(R.id.action_setupFragment_to_writeFragment)
+            findNavController().navigate(R.id.action_setupFragment_next)
         }
 
         return binding.root

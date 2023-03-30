@@ -18,7 +18,7 @@ class IntroFragment : Fragment() {
         val binding = FragmentCreateIntroBinding.inflate(layoutInflater)
 
         binding.next.setOnClickListener {
-            findNavController().navigate(R.id.action_introFragment_to_setupFragment)
+            findNavController().navigate(R.id.action_introFragment_next)
         }
 
         return binding.root

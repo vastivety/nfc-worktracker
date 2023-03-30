@@ -1,5 +1,6 @@
 package ca.mcgill.nfcworktracker.create
 
+import android.nfc.NfcAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,7 +18,10 @@ class FailureFragment : Fragment() {
     ): View {
         val binding = FragmentCreateFailureBinding.inflate(layoutInflater)
 
-        binding.next.setOnClickListener {
+        val errorText = arguments?.getString(Util.EXTRA_FAILURE_MESSAGE, null)
+        binding.error.text = errorText?:"no error specified"
+
+            binding.next.setOnClickListener {
             activity?.finish()
         }
         binding.retry.setOnClickListener {
@@ -25,5 +29,10 @@ class FailureFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        NfcAdapter.getDefaultAdapter(context).disableReaderMode(requireActivity())
     }
 }

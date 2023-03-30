@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_setupFragment_next"
             app:destination="@id/writeFragment" />
+        <action
+            android:id="@+id/action_setupFragment_failure"
+            app:destination="@id/failureFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"

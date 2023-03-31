@@ -44,11 +44,6 @@ class SetupFragment : Fragment(), NfcAdapter.ReaderCallback {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentCreateSetupBinding.inflate(layoutInflater)
-
-        binding.pretendDiscovered.setOnClickListener {
-            onTagDiscovered(null)
-        }
-
         return binding.root
     }
 

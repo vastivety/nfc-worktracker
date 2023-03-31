@@ -39,13 +39,6 @@ class WriteFragment : Fragment(), NfcAdapter.ReaderCallback {
             tag = arguments?.getParcelable(Util.EXTRA_DISCOVERED_TAG)
         }
 
-        binding.pretendWriteSuccess.setOnClickListener {
-            navigateAway(true)
-        }
-        binding.pretendWriteFail.setOnClickListener {
-            navigateAway(false, "debug button \"pretend fail\" clicked.")
-        }
-
         return binding.root
     }
 

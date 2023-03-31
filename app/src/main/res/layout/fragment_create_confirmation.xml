@@ -6,10 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".create.ConfirmationFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="CONFIRMATION FRAGMENT" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/create_confirmation_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        tools:text="@string/create_confirmation_text_placeholder"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next"

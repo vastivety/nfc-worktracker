@@ -6,18 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".create.SetupFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="SETUP FRAGMENT" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/pretend_discovered"
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="pretend tag discovered"
-        android:backgroundTint="@color/test"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        android:text="@string/create_setup_text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

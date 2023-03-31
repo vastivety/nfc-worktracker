@@ -21,7 +21,7 @@ class FailureFragment : Fragment() {
         val errorText = arguments?.getString(Util.EXTRA_FAILURE_MESSAGE, null)
         binding.error.text = errorText?:"no error specified"
 
-            binding.next.setOnClickListener {
+        binding.next.setOnClickListener {
             activity?.finish()
         }
         binding.retry.setOnClickListener {

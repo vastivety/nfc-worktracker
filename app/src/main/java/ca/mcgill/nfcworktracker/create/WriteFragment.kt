@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import ca.mcgill.nfcworktracker.R
 import ca.mcgill.nfcworktracker.create.Util.navigateFailure
@@ -57,11 +56,11 @@ class WriteFragment : Fragment(), NfcAdapter.ReaderCallback {
         if (tag == null) {
             navigateAway(false, "tag from bundle is null")
         } else {
-            navigateAway(writeTo(tag!!), failureMsg)
+            navigateAway(writeToTag(), failureMsg)
         }
     }
 
-    private fun writeTo(tag: Tag): Boolean {
+    private fun writeToTag(): Boolean {
         //get ndef connection to tag
         val ndefTag = Ndef.get(tag)
         ndefTag.connect()
@@ -76,7 +75,7 @@ class WriteFragment : Fragment(), NfcAdapter.ReaderCallback {
         }
         // write
         val record = NdefRecord.createMime(getString(R.string.tag_mime), Util.createTagContent().encodeToByteArray())
-        //ndefTag.writeNdefMessage(NdefMessage(record)) //TODO enable write when everything works
+        ndefTag.writeNdefMessage(NdefMessage(record))
         // verify
         if (ndefTag.ndefMessage.records.none {
             it.toMimeType() == getString(R.string.tag_mime)

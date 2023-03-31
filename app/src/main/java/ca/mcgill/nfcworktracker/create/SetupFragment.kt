@@ -19,7 +19,7 @@ class SetupFragment : Fragment(), NfcAdapter.ReaderCallback {
 
     private var doNotStopReaderModeOnPause = false
 
-    var discoveredTag: Tag? = null
+    private var discoveredTag: Tag? = null
     private val onTagDiscoveredRunnable = Runnable {
         if (discoveredTag == null) {
             navigateFailure("discovered null tag", R.id.action_setupFragment_failure)

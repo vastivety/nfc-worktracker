@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import ca.mcgill.nfcworktracker.R
 
 object Util {
-    const val nfcReaderModeFlags: Int = NfcAdapter.FLAG_READER_NFC_A or NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK
+    const val nfcReaderModeFlags: Int = NfcAdapter.FLAG_READER_NFC_A
 
     const val EXTRA_FAILURE_MESSAGE = "ca.mcgill.nfcworktracker.create.extra-failure-message"
     const val EXTRA_DISCOVERED_TAG = "ca.mcgill.nfcworktracker.create.extra-discovered-tag"

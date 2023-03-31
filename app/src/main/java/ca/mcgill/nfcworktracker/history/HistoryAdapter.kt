@@ -12,7 +12,7 @@ import ca.mcgill.nfcworktracker.R
 class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
-    val dataset = ArrayList<HistoryDataPoint>()
+    private val dataset = ArrayList<HistoryDataPoint>()
 
     init {
         reloadFromDatabase()

@@ -3,11 +3,8 @@ package ca.mcgill.nfcworktracker.history
 import ca.mcgill.nfcworktracker.MyApplication
 import ca.mcgill.nfcworktracker.database.HistoryEntry
 import ca.mcgill.nfcworktracker.database.HistoryEntryDao
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
 import java.time.Instant
-import java.time.temporal.TemporalAccessor
 
 class HistoryDatabaseHelper(application: MyApplication) {
     private val historyDao: HistoryEntryDao

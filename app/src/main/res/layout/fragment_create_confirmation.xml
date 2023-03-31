@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textAlignment="center"
-        tools:text="@string/create_confirmation_text_placeholder"/>
+        tools:text="@string/create_confirmation_text_template"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next"

@@ -1,6 +1,5 @@
 package ca.mcgill.nfcworktracker.create
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,7 @@ class ConfirmationFragment : Fragment() {
             activity?.finish()
         }
 
-        binding.createConfirmationText.text = getString(R.string.create_confirmation_text_placeholder, binding.next.text)
+        binding.createConfirmationText.text = getString(R.string.create_confirmation_text_template, binding.next.text)
 
         return binding.root
     }

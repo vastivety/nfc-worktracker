@@ -1,9 +1,6 @@
 package ca.mcgill.nfcworktracker.create
 
-import android.nfc.NdefMessage
-import android.nfc.NdefRecord
-import android.nfc.NfcAdapter
-import android.nfc.Tag
+import android.nfc.*
 import android.nfc.tech.Ndef
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import ca.mcgill.nfcworktracker.R
 import ca.mcgill.nfcworktracker.create.Util.navigateFailure
 import ca.mcgill.nfcworktracker.databinding.FragmentCreateWriteBinding
+import java.io.IOException
 
 class WriteFragment : Fragment(), NfcAdapter.ReaderCallback {
 
@@ -63,7 +61,12 @@ class WriteFragment : Fragment(), NfcAdapter.ReaderCallback {
     private fun writeToTag(): Boolean {
         //get ndef connection to tag
         val ndefTag = Ndef.get(tag)
-        ndefTag.connect()
+        try {
+            ndefTag.connect()
+        } catch (_: IOException) {
+            failureMsg = "Connection to tag failed"
+            return false
+        }
         // pre-write checks
         if (!ndefTag.isConnected) {
             failureMsg = "Tag disconnected early"
@@ -75,9 +78,21 @@ class WriteFragment : Fragment(), NfcAdapter.ReaderCallback {
         }
         // write
         val record = NdefRecord.createMime(getString(R.string.tag_mime), Util.createTagContent().encodeToByteArray())
-        ndefTag.writeNdefMessage(NdefMessage(record))
+        try {
+            ndefTag.writeNdefMessage(NdefMessage(record))
+        } catch (_: Exception) {
+            failureMsg = "Tag write failed"
+            return false
+        }
         // verify
-        if (ndefTag.ndefMessage.records.none {
+        val ndefMessageAfterWrite: NdefMessage
+        try {
+            ndefMessageAfterWrite = ndefTag.ndefMessage
+        } catch (_: Exception) {
+            failureMsg = "Tag verification read failed"
+            return false
+        }
+        if (ndefMessageAfterWrite.records.none {
             it.toMimeType() == getString(R.string.tag_mime)
         }) {
             failureMsg = "Mime type wrong after write"

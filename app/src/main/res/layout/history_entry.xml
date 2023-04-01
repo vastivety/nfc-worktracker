@@ -12,36 +12,37 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <include
-            layout="@layout/history_entry_time"
-            android:id="@+id/start_time"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/time_connector"
-            app:layout_constraintTop_toTopOf="@id/time_connector"
-            app:layout_constraintBottom_toBottomOf="@id/time_connector" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/time_connector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_arrow_time_to_time"
-            tools:tint="@color/test"
-            android:contentDescription="@string/descr_arrow_time_to_time" />
+            <include
+                layout="@layout/history_entry_time"
+                android:id="@+id/start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/time_connector" />
 
-        <include
-            layout="@layout/history_entry_time"
-            android:id="@+id/end_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/time_connector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/time_connector"
-            app:layout_constraintBottom_toBottomOf="@id/time_connector" />
+            <ImageView
+                android:id="@+id/time_connector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_time_to_time"
+                tools:tint="@color/test"
+                android:contentDescription="@string/descr_arrow_time_to_time" />
+
+            <include
+                layout="@layout/history_entry_time"
+                android:id="@+id/end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/time_connector"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/test_text"

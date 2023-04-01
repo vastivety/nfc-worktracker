@@ -12,34 +12,36 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <com.google.android.material.textview.MaterialTextView
+        <include
+            layout="@layout/history_entry_time"
             android:id="@+id/start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/time_connector"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="7:30 pm"/>
+            app:layout_constraintTop_toTopOf="@id/time_connector"
+            app:layout_constraintBottom_toBottomOf="@id/time_connector" />
 
         <ImageView
             android:id="@+id/time_connector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/start_time"
-            app:layout_constraintEnd_toStartOf="@id/end_time"
-            app:layout_constraintBaseline_toBaselineOf="@id/start_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_arrow_time_to_time"
             tools:tint="@color/test"
             android:contentDescription="@string/descr_arrow_time_to_time" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <include
+            layout="@layout/history_entry_time"
             android:id="@+id/end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/time_connector"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="8:45 pm"/>
+            app:layout_constraintTop_toTopOf="@id/time_connector"
+            app:layout_constraintBottom_toBottomOf="@id/time_connector" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/test_text"
@@ -49,7 +51,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="48dp"
-            android:background="@color/test"/>
+            android:background="@color/test"
+            tools:text="Hello I am your test text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

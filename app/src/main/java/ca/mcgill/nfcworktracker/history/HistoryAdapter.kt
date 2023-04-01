@@ -2,12 +2,11 @@ package ca.mcgill.nfcworktracker.history
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ca.mcgill.nfcworktracker.R
+import ca.mcgill.nfcworktracker.databinding.HistoryEntryBinding
 
 class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
@@ -21,17 +20,17 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     /**
      * view holder for a single history entry.
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(binding: HistoryEntryBinding) : RecyclerView.ViewHolder(binding.root) {
         val textView: TextView
         val startTime: TextView
         val endTime: TextView
         val timeConnector: ImageView
 
         init {
-            startTime = view.findViewById(R.id.start_time)
-            endTime = view.findViewById(R.id.end_time)
-            textView = view.findViewById(R.id.test_text)
-            timeConnector = view.findViewById(R.id.time_connector)
+            startTime = binding.startTime.time
+            endTime = binding.endTime.time
+            textView = binding.testText
+            timeConnector = binding.timeConnector
         }
     }
 
@@ -40,7 +39,7 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
      */
     private fun reloadFromDatabase() {
         dataset.clear()
-        dataset.addAll(databaseHelper.getAll())
+        dataset.addAll(databaseHelper.getAllDescending())
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -51,20 +50,19 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged") // we have no means of knowing at what index that point was inserted
     fun addPoint(point: HistoryDataPoint) {
-        databaseHelper.add(point)
+        databaseHelper.insertIntoDatabase(point)
         reloadFromDatabase()
-        notifyItemInserted(itemCount)
+        notifyDataSetChanged()
     }
 
     /**
      * creates the view holders.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.history_entry, parent, false)
-
-        return ViewHolder(view)
+        val binding = HistoryEntryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     /**

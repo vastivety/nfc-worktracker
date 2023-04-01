@@ -142,7 +142,7 @@ class NfcService : Service() {
 
     private fun stopTracking() {
         val databaseHelper = HistoryDatabaseHelper(application as MyApplication)
-        databaseHelper.add(HistoryDataPoint(
+        databaseHelper.insertIntoDatabase(HistoryDataPoint(
             startTime,
             Instant.now()
         ))

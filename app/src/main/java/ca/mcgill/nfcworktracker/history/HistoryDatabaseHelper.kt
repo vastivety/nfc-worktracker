@@ -12,9 +12,9 @@ class HistoryDatabaseHelper(application: MyApplication) {
         historyDao = application.history
     }
 
-    fun getAll(): Array<HistoryDataPoint> {
+    fun getAllDescending(): Array<HistoryDataPoint> {
         val list = ArrayList<HistoryDataPoint>()
-        for (historyEntry: HistoryEntry in runBlocking { historyDao.getAll() }) {
+        for (historyEntry: HistoryEntry in runBlocking { historyDao.getAllDescending() }) {
             list.add(HistoryDataPoint(
                 Instant.ofEpochSecond(historyEntry.startTime),
                 Instant.ofEpochSecond(historyEntry.endTime)
@@ -23,7 +23,7 @@ class HistoryDatabaseHelper(application: MyApplication) {
         return list.toTypedArray()
     }
 
-    fun add(point: HistoryDataPoint) {
+    fun insertIntoDatabase(point: HistoryDataPoint) {
         val historyEntry = HistoryEntry(
             0,
             point.startTime.epochSecond,

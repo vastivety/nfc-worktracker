@@ -26,7 +26,6 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
      * view holder for a single history entry.
      */
     class ViewHolder(binding: HistoryEntryBinding) : RecyclerView.ViewHolder(binding.root) {
-        val textView: TextView
         val startTime: TextView
         val startDate: TextView
         val endTime: TextView
@@ -38,7 +37,6 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
             startDate = binding.startTime.date
             endTime = binding.endTime.time
             endDate = binding.endTime.date
-            textView = binding.testText
             timeConnector = binding.timeConnector
         }
     }
@@ -59,6 +57,7 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
         notifyDataSetChanged()
     }
 
+    @Suppress("unused") // only ever used for testing
     @SuppressLint("NotifyDataSetChanged") // we have no means of knowing at what index that point was inserted
     fun addPoint(point: HistoryDataPoint) {
         databaseHelper.insertIntoDatabase(point)
@@ -87,7 +86,6 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
             holder.endDate.text = second
         }
         holder.timeConnector.imageTintList = holder.startTime.textColors
-        holder.textView.text = "HELLO I AM AT POSITION $position. My record says:\n${dataset[position]}"
     }
 
     /**

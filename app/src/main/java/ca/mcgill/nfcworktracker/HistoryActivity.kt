@@ -7,9 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import ca.mcgill.nfcworktracker.databinding.ActivityHistoryBinding
 import ca.mcgill.nfcworktracker.history.HistoryAdapter
-import ca.mcgill.nfcworktracker.history.HistoryDataPoint
 import ca.mcgill.nfcworktracker.history.HistoryDatabaseHelper
-import java.time.Instant
 
 class HistoryActivity : AppCompatActivity() {
     private lateinit var adapter: HistoryAdapter
@@ -21,10 +19,6 @@ class HistoryActivity : AppCompatActivity() {
 
         adapter = HistoryAdapter(HistoryDatabaseHelper(application as MyApplication))
         binding.recyclerView.adapter = adapter
-
-        binding.addTestButton.setOnClickListener { adapter.addPoint(
-            HistoryDataPoint(Instant.now().minusSeconds(400), Instant.now())
-        ) }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

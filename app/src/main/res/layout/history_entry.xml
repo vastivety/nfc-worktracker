@@ -1,61 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     style="?attr/materialCardViewFilledStyle">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <include
-                layout="@layout/history_entry_time"
-                android:id="@+id/start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/time_connector" />
-
-            <ImageView
-                android:id="@+id/time_connector"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_arrow_time_to_time"
-                tools:tint="@color/test"
-                android:contentDescription="@string/descr_arrow_time_to_time" />
-
-            <include
-                layout="@layout/history_entry_time"
-                android:id="@+id/end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/time_connector"
-                android:layout_alignParentEnd="true" />
-
-        </RelativeLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/test_text"
+        <include
+            layout="@layout/history_entry_time"
+            android:id="@+id/start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="48dp"
-            android:background="@color/test"
-            android:visibility="gone"
-            tools:visibility="visible"
-            tools:text="Hello I am your test text" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/time_connector" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/time_connector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_arrow_time_to_time"
+            tools:tint="@color/test"
+            android:contentDescription="@string/descr_arrow_time_to_time" />
+
+        <include
+            layout="@layout/history_entry_time"
+            android:id="@+id/end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/time_connector"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

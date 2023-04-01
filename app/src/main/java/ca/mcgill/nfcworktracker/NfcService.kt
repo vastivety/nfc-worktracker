@@ -46,6 +46,40 @@ class NfcService : Service() {
         const val ACTION_STOP_SELF = "ca.mcgill.nfcworktracker.action_stop_self"
 
         var hasInstanceRunning = false
+            set(value) {
+                field = value
+                Observer.notifyFromSetter()
+            }
+    }
+
+    object Observer {
+        private val hasInstanceRunningChangeListeners = ArrayList<Listener>()
+
+        fun addChangeListener(callImmediately: Boolean = false, listener: Listener): Listener {
+            hasInstanceRunningChangeListeners.add(listener)
+            if (callImmediately) {
+                listener.callback(hasInstanceRunning)
+            }
+            return listener
+        }
+
+        fun removeChangeListener(listener: Listener): Boolean {
+            return hasInstanceRunningChangeListeners.remove(listener)
+        }
+
+        internal fun notifyFromSetter() {
+            hasInstanceRunningChangeListeners.forEach {
+                it.callback(hasInstanceRunning)
+            }
+        }
+
+        interface Listener {
+            fun callback(newStatus: Boolean)
+
+            fun remove(): Boolean {
+                return removeChangeListener(this@Listener)
+            }
+        }
     }
 
     override fun onBind(intent: Intent): IBinder? {

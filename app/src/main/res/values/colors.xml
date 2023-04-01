@@ -2,4 +2,6 @@
 <resources>
     <color name="test">#FF5722</color>
     <color name="error">#ff0000</color>
+    <color name="home_icon_active">#007F00</color>
+    <color name="home_icon_inactive">#7F7F7F</color>
 </resources>

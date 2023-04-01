@@ -1,12 +1,17 @@
 package ca.mcgill.nfcworktracker.history
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.mcgill.nfcworktracker.databinding.HistoryEntryBinding
+import java.time.Instant
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
@@ -23,12 +28,16 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     class ViewHolder(binding: HistoryEntryBinding) : RecyclerView.ViewHolder(binding.root) {
         val textView: TextView
         val startTime: TextView
+        val startDate: TextView
         val endTime: TextView
+        val endDate: TextView
         val timeConnector: ImageView
 
         init {
             startTime = binding.startTime.time
+            startDate = binding.startTime.date
             endTime = binding.endTime.time
+            endDate = binding.endTime.date
             textView = binding.testText
             timeConnector = binding.timeConnector
         }
@@ -69,8 +78,14 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
      * updates the view holders, based on current dataset contents.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.startTime.text = dataset[position].startTime.toString()
-        holder.endTime.text = dataset[position].endTime.toString()
+        with(parse(dataset[position].startTime, holder.startTime.context)) {
+            holder.startTime.text = first
+            holder.startDate.text = second
+        }
+        with(parse(dataset[position].endTime, holder.endTime.context)) {
+            holder.endTime.text = first
+            holder.endDate.text = second
+        }
         holder.timeConnector.imageTintList = holder.startTime.textColors
         holder.textView.text = "HELLO I AM AT POSITION $position. My record says:\n${dataset[position]}"
     }
@@ -79,4 +94,12 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
      * returns dataset size.
      */
     override fun getItemCount(): Int = dataset.size
+
+    private fun parse(instant: Instant, context: Context): Pair<String, String> {
+        val date = Date.from(instant)
+        val dateFormat = DateFormat.getMediumDateFormat(context)
+        val timeFormat = DateFormat.getTimeFormat(context)
+
+        return Pair(timeFormat.format(date), dateFormat.format(date))
+    }
 }

@@ -53,6 +53,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="48dp"
             android:background="@color/test"
+            android:visibility="gone"
+            tools:visibility="visible"
             tools:text="Hello I am your test text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

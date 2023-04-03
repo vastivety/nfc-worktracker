@@ -100,8 +100,8 @@ class NfcService : Service() {
             @Suppress("DEPRECATION") //checked SDK_INT above
             tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
             @Suppress("DEPRECATION") //checked SDK_INT above
-            @Suppress("UNCHECKED_CAST") //extra should only contain ndef messages
-            messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES) as Array<NdefMessage>?
+            messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
+                ?.filterIsInstance<NdefMessage>()?.toTypedArray()
         }
         val relevantRecord = if (messages == null) null else getRelevantRecord(messages)
         if (tag == null || messages == null || relevantRecord == null) {

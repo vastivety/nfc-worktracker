@@ -36,5 +36,15 @@
             android:layout_toEndOf="@id/time_connector"
             android:layout_alignParentEnd="true" />
 
+        <TextView
+            android:id="@+id/no_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignStart="@id/end_time"
+            android:layout_alignEnd="@id/end_time"
+            android:textAlignment="center"
+            android:text="@string/session_active" />
+
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

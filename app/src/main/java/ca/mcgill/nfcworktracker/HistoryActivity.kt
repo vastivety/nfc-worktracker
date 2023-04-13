@@ -12,15 +12,34 @@ import ca.mcgill.nfcworktracker.history.HistoryDatabaseHelper
 class HistoryActivity : AppCompatActivity() {
     private lateinit var adapter: HistoryAdapter
 
+    private lateinit var binding: ActivityHistoryBinding
+    private lateinit var nfcServiceObserverListener: NfcService.Observer.Listener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityHistoryBinding.inflate(layoutInflater)
+        binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         adapter = HistoryAdapter(HistoryDatabaseHelper(application as MyApplication))
         binding.recyclerView.adapter = adapter
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        nfcServiceObserverListener = NfcService.Observer.addChangeListener(
+            true,
+            object : NfcService.Observer.Listener {
+                override fun callback(newStatus: Boolean) {
+                    adapter.notifyNfcServiceStatusChanged(newStatus)
+                }
+            })
+    }
+
+    override fun onPause() {
+        nfcServiceObserverListener.remove()
+        super.onPause()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

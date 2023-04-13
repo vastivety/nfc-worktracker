@@ -45,10 +45,18 @@ class NfcService : Service() {
         const val SERVICE_NOTIFICATION_CHANNEL_NAME = "Tracking Active"
         const val ACTION_STOP_SELF = "ca.mcgill.nfcworktracker.action_stop_self"
 
-        var hasInstanceRunning = false
+        private var instance: NfcService? = null
             set(value) {
                 field = value
                 Observer.notifyFromSetter()
+            }
+        private val hasInstanceRunning: Boolean
+            get() {
+                return instance != null
+            }
+        val startTimeOfInstance: Instant?
+            get() {
+                return instance?.startTime
             }
     }
 
@@ -87,7 +95,7 @@ class NfcService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (hasInstanceRunning) {
+        if (instance != null) {
             Log.w("nfc", "duplicate start of service was stopped")
             return START_NOT_STICKY
         }
@@ -131,7 +139,7 @@ class NfcService : Service() {
 
         startTracking()
 
-        hasInstanceRunning = true
+        instance = this
         return START_NOT_STICKY
     }
 
@@ -154,7 +162,7 @@ class NfcService : Service() {
                 tagPresenceCheckScheduler.shutdownNow()
                 stopTracking()
                 this@NfcService.stopSelf()
-                hasInstanceRunning = false
+                instance = null
                 Log.i("nfc", "service stopped")
             }
         }

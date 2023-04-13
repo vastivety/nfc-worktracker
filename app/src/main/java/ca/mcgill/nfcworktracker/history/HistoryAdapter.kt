@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.text.format.DateFormat
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ca.mcgill.nfcworktracker.NfcService
 import ca.mcgill.nfcworktracker.databinding.HistoryEntryBinding
+import ca.mcgill.nfcworktracker.databinding.HistoryEntryTimeBinding
 import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,13 +34,31 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
         val endTime: TextView
         val endDate: TextView
         val timeConnector: ImageView
+        private val endTimeBinding: HistoryEntryTimeBinding
+        private val noEndTime: View
 
         init {
             startTime = binding.startTime.time
             startDate = binding.startTime.date
+            endTimeBinding = binding.endTime
             endTime = binding.endTime.time
             endDate = binding.endTime.date
             timeConnector = binding.timeConnector
+            noEndTime = binding.noEndTime
+        }
+
+        /**
+         * if argument is false, the end time will be hidden in favor of the noEndTime view.
+         */
+        fun setEndTimeExistence(hasEndTime: Boolean) {
+            if (hasEndTime) {
+                endTimeBinding.root.visibility = View.VISIBLE
+                noEndTime.visibility = View.GONE
+            } else {
+                //just invisible because needed for formatting
+                endTimeBinding.root.visibility = View.INVISIBLE
+                noEndTime.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -81,9 +102,14 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
             holder.startTime.text = first
             holder.startDate.text = second
         }
-        with(parse(dataset[position].endTime, holder.endTime.context)) {
-            holder.endTime.text = first
-            holder.endDate.text = second
+        if (dataset[position].endTime == Instant.MAX) {
+            holder.setEndTimeExistence(false)
+        } else {
+            holder.setEndTimeExistence(true)
+            with(parse(dataset[position].endTime, holder.endTime.context)) {
+                holder.endTime.text = first
+                holder.endDate.text = second
+            }
         }
         holder.timeConnector.imageTintList = holder.startTime.textColors
     }
@@ -93,11 +119,30 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
      */
     override fun getItemCount(): Int = dataset.size
 
+    /**
+     * @return (local time, local date) as strings
+     */
     private fun parse(instant: Instant, context: Context): Pair<String, String> {
         val date = Date.from(instant)
         val dateFormat = DateFormat.getMediumDateFormat(context)
         val timeFormat = DateFormat.getTimeFormat(context)
 
         return Pair(timeFormat.format(date), dateFormat.format(date))
+    }
+
+    @SuppressLint("NotifyDataSetChanged") // all items are replaced
+    fun notifyNfcServiceStatusChanged(newStatus: Boolean) {
+        if (newStatus) {
+            //tracking started
+            val startTime = NfcService.startTimeOfInstance
+            if (startTime != null) {
+                dataset.add(0, HistoryDataPoint(startTime, Instant.MAX))
+                notifyItemInserted(0)
+            }
+        } else {
+            //tracking stopped
+            reloadFromDatabase()
+            notifyDataSetChanged()
+        }
     }
 }

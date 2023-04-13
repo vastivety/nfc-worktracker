@@ -15,4 +15,5 @@
     <string name="create_write_text">Write in progress, you will be redirected shortly.</string>
     <string name="create_confirmation_text_template">Write was successful.\nYour first session recording will start\nas soon as you click %1$s.\n\nYou can also lift your phone now to avoid recording\na first session.</string>
     <string name="create_failure_text">NFC connection could not be established.\nPlease try again.\nIf this persists, feel free to open\nan issue on our GitHub.\n\nError Text:</string>
+    <string name="session_active">session active</string>
 </resources>

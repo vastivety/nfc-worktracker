@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import ca.mcgill.nfcworktracker.NfcService
 import ca.mcgill.nfcworktracker.databinding.HistoryEntryBinding
 import ca.mcgill.nfcworktracker.databinding.HistoryEntryTimeBinding
@@ -20,6 +21,7 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     private val dataset = ArrayList<HistoryDataPoint>()
+    private var recyclerView: RecyclerView? = null
 
     init {
         reloadFromDatabase()
@@ -114,6 +116,11 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
         holder.timeConnector.imageTintList = holder.startTime.textColors
     }
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+    }
+
     /**
      * returns dataset size.
      */
@@ -135,9 +142,22 @@ class HistoryAdapter(private val databaseHelper: HistoryDatabaseHelper) :
         if (newStatus) {
             //tracking started
             val startTime = NfcService.startTimeOfInstance
-            if (startTime != null) {
-                dataset.add(0, HistoryDataPoint(startTime, Instant.MAX))
-                notifyItemInserted(0)
+            // safety checks
+            if (startTime == null || recyclerView?.layoutManager == null) {
+                return
+            }
+            // keep track of whether the list was scrolled before adding new top element
+            val topEntryWasVisible = with(recyclerView!!.layoutManager!!) {
+                getChildAt(0)?.let {
+                    isViewPartiallyVisible(it, true, true)
+                }?:false
+            }
+            // add point to dataset and inform adapter about change
+            dataset.add(0, HistoryDataPoint(startTime, Instant.MAX))
+            notifyItemInserted(0)
+            // if list was at top in the beginning, we also want to stay scrolled to top
+            if (topEntryWasVisible) {
+                recyclerView!!.scrollToPosition(0)
             }
         } else {
             //tracking stopped

@@ -1,4 +1,4 @@
-# nfc-worktracker
+# NFC WorkTracker
 
 ## Project Details
 
